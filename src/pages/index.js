@@ -1,5 +1,5 @@
 export { default as Home } from './Home'
 export { default as Product } from './Product'
 export { default as ShopCar } from './ShopCar'
-export { default as CartList } from './ShopCar/CartList'
+export { default as CartList } from './ShopCar/DetailItem'
 export { default as Categroy } from './Product/Categroy.js'

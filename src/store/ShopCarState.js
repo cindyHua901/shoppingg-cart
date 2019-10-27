@@ -94,27 +94,20 @@ export default function ShopCarReducer(state={}, { type, ...payload }){
                 ...state,
                 details
             };
-        case DELETE_PRODUCT:
-                details = details.filter((detail) =>{
-                if(detail.product.id !== productId){
-                    return detail;
-                }
-                return detail;
+        case DELETE_PRODUCT:         //从购物车里删除某个单品
+            let totalPrice = 0;
+            details = details.filter((detail) =>{
+                return detail.product.id !== productId;
             })
-            return{
-                ...state,
-                details
-            };
-        case CHECK_PRODUCT:
-            details = details.map((detail) =>{
-                if(detail.product.id === productId){
-                        detail.isChecked = !detail.isChecked; //取反
+            for(var i=0; i < details.length; i++){
+                if(details[i].isChecked){
+                    totalPrice += details[i].singleTotal
                 }
-                return detail;
-                });
-            return{
-                ...state,
-                details
+            }
+            return {
+                ...this.state,
+                details,
+                totalPrice
             }
         default:
             return state

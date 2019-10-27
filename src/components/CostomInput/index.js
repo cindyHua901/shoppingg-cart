@@ -44,9 +44,9 @@ export default function CustomizedInputBase(props) {
     stock,
   });
 
-  const handleChange = () => event => {
+  const handleChange = (e) => {
     props.handleSelectNum(state.inputValue)
-    // setState({ ...state, inputValue: event.currentTarget.value });
+    setState({ ...state, inputValue: e.target.value });
   };
   const handleReduce = () =>{
     console.log("reduce SelectNum",state.inputValue);
@@ -54,12 +54,14 @@ export default function CustomizedInputBase(props) {
       setState({...state, inputValue: -- state.inputValue});
       console.log("reduce SelectNum",state.inputValue);
     }
+    props.handleSelectNum(state.inputValue)
   }
   const handleAdd = ()=>{
     if( state.inputValue *1 < state.stock ){
       setState({...state, inputValue: ++ state.inputValue})
       console.log("add SelectNum",state.inputValue);
     }
+    props.handleSelectNum(state.inputValue)
   }
   return (
     <Paper className={classes.root}>
