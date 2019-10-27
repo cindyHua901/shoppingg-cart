@@ -1,5 +1,9 @@
 import { ShopCar, Product } from "../pages";
 
+const initState = {
+    details:[],
+    totalPrice:0
+}
 // orderForm action creater
 
 export const SUM_TOTAL_PRODUCT = "Sum_total_product";
@@ -27,7 +31,7 @@ export const sumTotal = (detail)=>dispatch =>{
 }
 
 // reducer 接收到通知 更改state tree里的数据
-export default function OrderFormReducer(state={}, { type, payload }){
+export default function OrderFormReducer(state=initState, { type, payload }){
     switch (type) {
         case SUM_TOTAL_PRODUCT:
             const products = payload.detail;
@@ -35,7 +39,7 @@ export default function OrderFormReducer(state={}, { type, payload }){
                 return detail1.singleTotal + detail2.singleTotal;
             },0)
             return {
-                ... state,
+                ...state,
                 totalPrice
             };
         case  SUM_SINGLE_PRODUCT:

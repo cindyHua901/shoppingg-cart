@@ -15,7 +15,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { NavBar } from '../../components'
 import DetailItem from './DetailItem';
-import {addProduct, addSelectNum,reduceSelectNum,deleteProduct,checkProduct} from '../../store/ShopCarState'
+import {addProduct, changeNumber,deleteProduct,checkProduct,sumTotal,sumSingle,checkSingleProduct,checkAllProduct} from '../../store/ShopCarState'
 
 const styles = (theme)=>({
     shopCarContainer:{
@@ -101,127 +101,118 @@ class ShopCar extends Component {
         //         totalPrice: 333,       //遍历购物车被选中的产品 reduce singleTotal 计算总和
         // }
 
-    handleSelectAll = () =>{
-        // 判断是否所有的单品都勾选了
-        const count = this.props.details.filter(detail =>{
-                            return detail.isChecked
-                        }).length;
-        let isAllChecked = false;
-        if(count === this.props.details.length){
-            isAllChecked = true;
-        }
-        this.setState({
-            ...this.state,
-            isAllChecked,
-            totalPrice: this.sumTotalPrice()
-        });
+    // handleSelectAll = () =>{
+    //     // 判断是否所有的单品都勾选了
+    //     const count = this.props.details.filter(detail =>{
+    //                         return detail.isChecked
+    //                     }).length;
+    //     let isAllChecked = false;
+    //     if(count === this.props.details.length){
+    //         isAllChecked = true;
+    //     }
+    //     this.setState({
+    //         ...this.state,
+    //         isAllChecked,
+    //         totalPrice: this.sumTotalPrice()
+    //     });
         
-    }
+    // }
 
-    //当detailde isChecked更改的时候就需要判断 是否更改 全选复选框的值
-    toggleSelectAll = () =>{
-        alert("isAllchecked"+ this.state.isAllChecked);
-        const isAllChecked = !this.state.isAllChecked;
-        alert(isAllChecked);
-        let details ;
-        if(isAllChecked){
-            details = this.state.details.map(detail =>{
-                detail.isChecked = true;
-                return detail;
-            })
-        }else{
-           details = this.state.details.map(detail =>{
-                detail.isChecked = false;
-                return detail;
-            })
-        }
-        this.setState({
-            details,
-            isAllChecked,
-            totalPrice: this.sumTotalPrice()
-        });
-    }
+    // //当detail的 isChecked更改的时候就需要判断 是否更改 全选复选框的值
+    // toggleSelectAll = () =>{
+    //     const isAllChecked = !this.state.isAllChecked;
+    //     let details ;
+    //     if(isAllChecked){
+    //         details = this.state.details.map(detail =>{
+    //             detail.isChecked = true;
+    //             return detail;
+    //         })
+    //     }else{
+    //        details = this.state.details.map(detail =>{
+    //             detail.isChecked = false;
+    //             return detail;
+    //         })
+    //     }
+    //     this.setState({
+    //         details,
+    //         isAllChecked,
+    //         totalPrice: this.sumTotalPrice()
+    //     });
+    // }
 
-    //选中更改的时候 修改detail里的isChecked值
-    handleToggle = (productId) =>{
-        const details = this.state.details.map(detail => {
-            if(productId === detail.product.id){
-                detail.isChecked = !detail.isChecked ;
-            }
-            return detail;
-        });
-        this.setState({
-            ...this.state,
-            details,
-            totalPrice:this.sumTotalPrice()
-        })
-        this.handleSelectAll();
-    }
+    // //选中更改的时候 修改detail里的isChecked值
+    // handleToggle = (productId) =>{
+    //     const details = this.state.details.map(detail => {
+    //         if(productId === detail.product.id){
+    //             detail.isChecked = !detail.isChecked ;
+    //         }
+    //         return detail;
+    //     });
+    //     this.setState({
+    //         ...this.state,
+    //         details,
+    //         totalPrice:this.sumTotalPrice()
+    //     })
+    //     this.handleSelectAll();
+    // }
 
-    //计算所有选中商品的价格
-    sumTotalPrice = () =>{
-        var totalPrice = 0
-        const details = this.state.details;
-        for(var i=0; i < details.length; i++){
-            if(details[i].isChecked){
-                totalPrice += details[i].singleTotal
-            }
-        }
-        return totalPrice;
-    }
+    // //计算所有选中商品的价格
+    // sumTotalPrice = () =>{
+    //     var totalPrice = 0
+    //     const details = this.state.details;
+    //     for(var i=0; i < details.length; i++){
+    //         if(details[i].isChecked){
+    //             totalPrice += details[i].singleTotal
+    //         }
+    //     }
+    //     return totalPrice;
+    // }
 
-    //计算单品的价格
-    sumSinglePrice = (productID,selectNum) =>{
-        const details = this.state.details.map((detail)=>{
-            if(detail.product.id === productID){
-                detail.selectNum = selectNum;
-                detail.singleTotal = detail.selectNum * detail.product.unitPrice;
-            }
-        });
-        this.setState({
-            ...this.state, details,
-            totalPrice: this.sumTotalPrice()
-        })
+    // //计算单品的价格
+    // sumSinglePrice = (productID,selectNum) =>{
+    //     const details = this.state.details.map((detail)=>{
+    //         if(detail.product.id === productID){
+    //             detail.selectNum = selectNum;
+    //             detail.singleTotal = detail.selectNum * detail.product.unitPrice;
+    //         }
+    //     });
+    //     this.setState({
+    //         ...this.state, details,
+    //         totalPrice: this.sumTotalPrice()
+    //     })
         
-    }
+    // }
 
-    // 删除商品
-    deleteProduct = (productID)=>{
-        let totalPrice = 0;
-        const details = this.state.details.filter((detail) =>{
-            return detail.product.id !== productID;
-        })
-        for(var i=0; i < details.length; i++){
-            if(details[i].isChecked){
-                totalPrice += details[i].singleTotal
-            }
-        }
-        this.setState({
-            ...this.state,
-            details,
-            totalPrice
-        })
-    }
-    componentWillUpdate(){
-        // this.sumTotalPrice();
-    }
+    // // 删除商品
+    // deleteProduct = (productID)=>{
+    //     let totalPrice = 0;
+    //     const details = this.state.details.filter((detail) =>{
+    //         return detail.product.id !== productID;
+    //     })
+    //     for(var i=0; i < details.length; i++){
+    //         if(details[i].isChecked){
+    //             totalPrice += details[i].singleTotal
+    //         }
+    //     }
+    //     this.setState({
+    //         ...this.state,
+    //         details,
+    //         totalPrice
+    //     })
+    // }
 
-    componentWillMount() {
-        this.setState({
-            ...this.state, totalPrice:this.sumTotalPrice()
-        })
-    }
+    // componentWillMount() {
+    //     this.setState({
+    //         ...this.state, totalPrice:this.sumTotalPrice()
+    //     })
+    // }
 
     render() {
         const {classes} = this.props;
         const {details, isAllChecked, totalPrice} = this.props.shopCart;
         const {
-                addProduct,
-                addSelectNum,
-                reduceSelectNum,
-                deleteProduct,
-                checkProduct
-            } = this.props
+            addProduct, changeNumber,deleteProduct,checkProduct,sumTotal,sumSingle,checkSingleProduct,checkAllProduct
+            } = this.props;
         return (
             <Fragment>
                 shopCar
@@ -239,7 +230,7 @@ class ShopCar extends Component {
                             checked={isAllChecked}     
                             disableRipple
                             inputProps={{ 'aria-labelledby': "formHeader" }}
-                            onChange={this.toggleSelectAll}
+                            onChange={checkAllProduct}
                         />
                         </ListItemIcon>
                         <ListItemText id="IDColumn" primary="商品名称" />
@@ -257,9 +248,9 @@ class ShopCar extends Component {
                                 return (<DetailItem 
                                             key = {detail.product.id} 
                                             detail = {detail} 
-                                            changeCheckState = {this.handleToggle}
-                                            sumSinglePrice = {this.sumSinglePrice}
-                                            deleteProduct = {this.deleteProduct} />)
+                                            changeCheckState = {checkSingleProduct}
+                                            sumSinglePrice = {sumSingle}
+                                            deleteProduct = {deleteProduct} />)
                             }
                         )
                         }
@@ -288,10 +279,13 @@ const mapStateToProps = state =>{
 const mapDispatchToProps = dispatch =>{
     return {
         addProduct,
-        addSelectNum,
-        reduceSelectNum,
+        changeNumber,
         deleteProduct,
-        checkProduct
+        checkProduct,
+        sumTotal,
+        sumSingle,
+        checkSingleProduct,
+        checkAllProduct
     }
 }
 const ShopCartContainer = connect(

@@ -4,8 +4,7 @@ import ReduxThunk from 'redux-thunk'
 import reducers from './reducers';
 
 const store = createStore(
-  reducers,
-  applyMiddleware(ReduxThunk)
+  reducers
 );
 
 export default store;
