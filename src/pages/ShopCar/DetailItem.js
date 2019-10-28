@@ -11,10 +11,9 @@ import CostomInput from '../../components/CostomInput'
 
 
 class DetailItem extends Component {
+
   onChange= e => {
-    console.log(`checked = ${e.target.checked}`);
-    console.log(this.props.detail);
-    this.props.changeCheckState(this.props.detail.product.id);
+    this.props.handleChecked(this.props.detail.product.id);
   }
 
   handleSelectNum = (selectNum) => {

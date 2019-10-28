@@ -4,7 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
 import { CostomCard } from '../../components/';
 import {reducerProductStore} from '../../store/ProductsState'
+import { addProductAction } from '../../store/ShopCarState'
 import mock from './mock.js'
+import ShopCar from '../ShopCar';
 
 const styles =(theme)=> ({
     root: {
@@ -29,45 +31,53 @@ const styles =(theme)=> ({
 });
 
 class Home extends Component {
-    // constructor(props){
-    //     super(props);
-    //     this.state={
-    //         productList:mock.productList
-    //     }
-    // }
     render() {
-        const { classes, productList} = this.props;
-        console.log(this.props);
+        console.log(this.props)
+        const { classes, addProductAction} = this.props;
+        // const {productList} = this.state
+        const productList = this.props.mapStateToProps;
+        const shopCar = this.props.ShopCar;
+        console.log(shopCar);
         return (
             <Fragment>
                 <Container maxWidth="lg" className={classes.root} >
-                        {/* {
+                        {
                             productList.map((product)=>{
                             return (<CostomCard 
                                         product = {product} 
                                         key={product.id} 
+                                        handleAdd = {addProductAction}
                                         />)
                         })
-                        } */}
+                        }
                 </Container>
             </Fragment>
         )
     }
 }
 //先定义 mapStateToProps 这个函数来指定如何把当前 Redux store state 映射到展示组件的 props 中
-const mapStateToProps = state =>{
+const mapStateToProps = store =>{
     return {
-        productList:state.productList
+        productList:store.products.productList
     }
 }
 // mapDispatchToProps() 方法接收 dispatch() 方法并返回期望注入到展示组件的 props 中的回调方法。
-const mapDispatchToProps = dispatch =>{
-    return {
-        reducerProductStore
+const mapDispatchToProps = { reducerProductStore };
+
+// export default connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )
+export default connect(
+    (store)=>{
+        console.log(store)
+        return {
+            mapStateToProps: store.products.productList,
+            ShopCar:store.shopCar
+        }
+    },
+    {
+        reducerProductStore,
+        addProductAction
     }
-}
-const HomeCartContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Home)
-export default withStyles(styles)(HomeCartContainer);
+  )(withStyles(styles)(Home))

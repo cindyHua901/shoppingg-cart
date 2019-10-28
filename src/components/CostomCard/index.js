@@ -52,6 +52,7 @@ export default function CostomCard(props) {
   }
   const handleAddToCart = () =>{
       alert("clicked me!")
+      props.handleAdd(product,state.selectNum);
   }
   return (
     // card raised="true"可以用在hover上 选择当前的卡片的时候

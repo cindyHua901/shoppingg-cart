@@ -8,6 +8,7 @@ export const reduceStore =(productId,saleNumer)=>({
     saleNumer
 })
 
+
 export const reducerProductStore = (productId,saleNumer)=> dispatch =>{
     dispatch(reduceStore(productId,saleNumer));
 }
