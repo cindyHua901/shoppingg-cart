@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,13 +15,12 @@ const useStyles = makeStyles(theme => ({
     width: 100,
     height: 30,
     fontSize:16,
+    border:'1px solid #eee',
+    borderRadius:'5px'
   },
   input: {
     flex: 1,
     marginLeft:theme.spacing(1),
-    "&:hover":{
-      border:"1px solid red"
-    }
   },
   iconButton: {
   
@@ -45,26 +43,24 @@ export default function CustomizedInputBase(props) {
   });
 
   const handleChange = (e) => {
+    let inputValue = e.target.value *1;
     props.handleSelectNum(state.inputValue)
-    setState({ ...state, inputValue: e.target.value });
+    setState({ ...state, inputValue });
   };
   const handleReduce = () =>{
-    console.log("reduce SelectNum",state.inputValue);
     if( state.inputValue *1  > 1 ){
       setState({...state, inputValue: -- state.inputValue});
-      console.log("reduce SelectNum",state.inputValue);
     }
     props.handleSelectNum(state.inputValue)
   }
   const handleAdd = ()=>{
     if( state.inputValue *1 < state.stock ){
       setState({...state, inputValue: ++ state.inputValue})
-      console.log("add SelectNum",state.inputValue);
     }
     props.handleSelectNum(state.inputValue)
   }
   return (
-    <Paper className={classes.root}>
+    <div className={classes.root} >
       <IconButton 
         size="small" className={classes.iconButton} aria-label="add"
         onClick={handleAdd}
@@ -84,6 +80,6 @@ export default function CustomizedInputBase(props) {
         onClick={handleReduce}>
         <RemoveIcon className={classes.icon } />
       </IconButton>
-    </Paper>
+    </div>
   );
 }

@@ -131,6 +131,11 @@ export default {
       body: {
         fontSize: '0.95rem',
       }
+    },
+    MuiListItemText:{
+      root:{
+        flex:2,
+      }
     }
   }
 };

@@ -1,5 +1,5 @@
 import {
-    Home, Product,Categroy,ShopCar
+    Home, OrderForm,ShopCar
 } from './pages'
 const routes=[{
     path:'/home',
@@ -13,14 +13,10 @@ const routes=[{
     isMenu: true
 },{
     path:'/orderform',
-    component:Product,
+    component:OrderForm,
     title:'订单',
     exact:true,
     isMenu: true
-},{
-    path:'/home/:cateId',
-    component:Categroy,
-    title:'分类'
 }]
 
 export default routes;

@@ -12,19 +12,22 @@ import IconButton from '@material-ui/core/IconButton';
 const useStyles = makeStyles({
   card: {
     width: 170,
-    height:230,
-    margin:30,
+    height:260,
+    margin:20,
     padding:"10px 30px"
   },
   title: {
     fontSize: 14,
+    lineHeight:"25px",
+    textAlign:"center"
   },
   pos: {
     marginBottom: 12,
   },
   media:{
-    height: 87,
-    width: 87,
+    height: 130,
+    width: 120,
+    outline:"#999 solid 3px"
   },
   textField:{
     margin: 0,
@@ -51,8 +54,8 @@ export default function CostomCard(props) {
       console.log("selectNum",selectNum)
   }
   const handleAddToCart = () =>{
-      alert("clicked me!")
       props.handleAdd(product,state.selectNum);
+      alert(`${product.productName} x ${state.selectNum} 已放入购物车`)
   }
   return (
     // card raised="true"可以用在hover上 选择当前的卡片的时候

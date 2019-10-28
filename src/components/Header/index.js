@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
@@ -17,16 +17,23 @@ const styles = theme =>({
     menuButton: {
         marginRight: theme.spacing(2),
     },
-    leftMenu: {
-        flexGrow: 1,
-        justifyContent:"flex-start"
+    topBar:{
+        width:"95vw"
     },
+    rightLink: {
+        flexGrow:0,
+        flexBasis:100,
+        width:200
+    },
+    leftLink: {
+        flex:2,
+        width:200,
+        marginLeft:100
+    }
+    
   });
 
 class SideNav extends Component {
-    constructor(){
-        super();
-    }
     handleClick = (path)=>{
         console.log(this.props);
         this.props.history.push(path);
@@ -38,16 +45,16 @@ class SideNav extends Component {
         return (
             <div className={classes.root}>
             <AppBar position="fixed" id="TopNav">
-              <Toolbar>
+              <Toolbar className={classes.topBar}>
                 {
                     links.map((link, index) =>{
-                            className = index === 0 ?classes.leftMenu :classes.rightMenu
+                            className = index === 0 ?classes.leftLink :classes.rightLink
                     return (
-                        <Button color='inherit'
+                        <Link color='inherit'
                             className = {className}
                             onClick={this.handleClick.bind(this,link.path)}
                             key={link.path}
-                        >{link.title}</Button>
+                        >{link.title}</Link>
                     )
                 })
                 }

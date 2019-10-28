@@ -49,7 +49,7 @@ const initState = {
 
 export const SUM_TOTAL_PRODUCT = "Sum_total_product";
 export const GENDERATE_ORDERS = 'Genderate_orders'
-
+export const PAYFOR = "Pay"
 
 
 // 计算订单的总价 create action
@@ -62,7 +62,11 @@ export const genderateOrders = (details, totalPrice) =>({
     type:GENDERATE_ORDERS,
     details,
     totalPrice
+})
 
+export const payFor = (details) =>({
+    type:PAYFOR,
+    details
 })
 
 export const sumTotal = (detail)=>dispatch =>{
@@ -74,22 +78,20 @@ export default function OrderFormReducer(state=initState, { type, ...payload }){
     let details = payload.details;
     let totalPrice = payload.totalPrice;
     switch (type) {
-        // case SUM_TOTAL_PRODUCT:
-        //     const products = payload.detail;
-        //     const totalPrice = products.reduce((detail1,detail2) =>{
-        //         return detail1.singleTotal + detail2.singleTotal;
-        //     },0)
-        //     return {
-        //         ...state,
-        //         totalPrice
-        //     };
         case GENDERATE_ORDERS:
             return{
                 ...state,
                 details,
                 totalPrice
+            };
+        case PAYFOR:
+            return{
+                ...state,
+                details:[],
+                totalPrice:0
             }
         default:
             return state
+
     }
 }

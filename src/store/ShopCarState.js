@@ -1,4 +1,5 @@
 import { StepConnector } from "@material-ui/core";
+import { sumTotalProduct } from "./OrderFormState";
 
 const initialState = {
         details:[
@@ -43,7 +44,7 @@ const initialState = {
 
             }
         ],
-        isAllChecked: false,
+        isAllChecked: true,
         totalPrice: 492,       //遍历购物车被选中的产品 reduce singleTotal 计算总和
 
 }
@@ -76,11 +77,6 @@ export const deleteProductAction = (productId) =>({
     productId
 })
 
-export const sumTotalPrice = () =>({
-    type:SUM_TOTAL_PRICE
-})
-
-
 export const isChecked = (productId) =>({
     type:IS_CHECKED,
     productId
@@ -95,31 +91,6 @@ export const checkProductAction = (productId) =>({
     type:CHECK_PRODUCT,
     productId
 })
-// ---------dispatch
-export const addProduct = (product,selectNum) =>dispatch =>{
-    dispatch(addProductAction(product,selectNum))
-}
-
-export const changeNumber = (productId) =>dispatch =>{
-    dispatch(changeNumber(productId))
-}
-
-
-export const deleteProduct = (productId) => dispatch =>{
-    dispatch(deleteProductAction(productId))
-}
-
-export const checkProduct = (productId) => dispatch =>{
-    dispatch(checkProductAction(productId))
-}
-
-export const checkSingleProduct = (productId)=>dispatch =>{
-    console.log("dispatch")
-    dispatch(isChecked(productId));
-}
-export const checkAllProduct =() =>dispatch =>{
-    dispatch(checkedAll())
-}
 
 function sumTotalprice(details){
     let totalPrice = 0;
@@ -132,9 +103,6 @@ function sumTotalprice(details){
     return totalPrice;
 }
 
-function sumSingle(detail){
-    return detail.selectNum * detail.product.unitPrice;
-}
 
 function productCheckedNumber(details){
     let isAllChecked = false;
@@ -194,22 +162,15 @@ export default function ShopCarReducer(state = initialState, { type, ...payload 
                 totalPrice:sumTotalprice(details)
             }
         case DELETE_PRODUCT:         //从购物车里删除某个单品  ok
-            let totalPrice = 0;
             details = details.filter((detail) =>{
                 return detail.product.id !== productId;
             })
-            for(var i=0; i < details.length; i++){
-                if(details[i].isChecked){
-                    totalPrice += details[i].singleTotal
-                }
-            }
             return {
                 ...state,
                 details,
-                totalPrice
+                totalPrice:sumTotalprice(details)
             };
         case IS_CHECKED:
-                console.log(`checked $(productId)`)
                 details = state.details.map(detail => {
                     if(productId === detail.product.id){
                         detail.isChecked = !detail.isChecked ;
@@ -231,6 +192,7 @@ export default function ShopCarReducer(state = initialState, { type, ...payload 
                     totalPrice: sumTotalprice(details)
                 }
         case IS_ALLCHECKED: 
+             let totalPrice = 0;
             isAllChecked = !isAllChecked;
             if(isAllChecked){
                 details = details.map(detail =>{
@@ -238,22 +200,22 @@ export default function ShopCarReducer(state = initialState, { type, ...payload 
                     return detail;
                 })
             }else{
-            details = details.map(detail =>{
-                    detail.isChecked = false;
-                    return detail;
-                })
+                details = details.map(detail =>{
+                        detail.isChecked = false;
+                        return detail;
+                    })
             }
             return{
                 ...state,
                 details,
                 isAllChecked,
-                totalPrice:sumTotalPrice(details),
+                totalPrice:sumTotalprice(details),
             };
         case SUM_TOTAL_PRICE:
             console.log('sumTotalPrice ....')
             return{
                 ...state,
-                totalPrice:sumTotalPrice(details),
+                totalPrice:sumTotalprice(details),
             }
         default:
             return state

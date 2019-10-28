@@ -6,9 +6,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { withStyles } from '@material-ui/core/styles';
 import CostomInput from '../../components/CostomInput'
 
 
+const styles = (theme)=>({
+      text:{
+        textAlign:'left'
+      }
+})
 
 class DetailItem extends Component {
 
@@ -23,7 +29,7 @@ class DetailItem extends Component {
     this.props.deleteProduct(this.props.detail.product.id);
   }
   render() {
-    const {detail} = this.props;
+    const {detail,classes } = this.props;
     const {product, selectNum, isChecked, singleTotal} = detail;
     const labelId = `checkbox-list-label-${product}`;
     return (  
@@ -37,16 +43,16 @@ class DetailItem extends Component {
                     inputProps={{ 'aria-labelledby': labelId }}
                   />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={product.productName} />
-                <ListItemText id={labelId} primary={`￥ ${product.unitPrice}`} />
-                <ListItemText id={labelId} 
+                <ListItemText id={labelId} primary={product.productName} className={classes.text}/>
+                <ListItemText id={labelId} primary={`￥ ${product.unitPrice}`} className={classes.text} />
+                <ListItemText id={labelId} className={classes.text}
                     primary={ 
                     <CostomInput 
                         stock={product.stock} 
                         selectNum={selectNum} 
                         handleSelectNum={this.handleSelectNum}
                     />} />
-                <ListItemText id={labelId} primary={`￥ ${singleTotal}`} />
+                <ListItemText id={labelId} primary={`￥ ${singleTotal}`} className={classes.text} />
                 
                 <ListItemSecondaryAction>
                   <IconButton  
@@ -62,4 +68,4 @@ class DetailItem extends Component {
   
 }
 
-export default DetailItem
+export default withStyles(styles)(DetailItem)

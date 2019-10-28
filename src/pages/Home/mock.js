@@ -87,15 +87,15 @@ export default {
         productName:'名刀.司命',    //商品名
         unitPrice:66, 
         stock: 45,             	//库存
-        imgUrl:'url',         //图片资源
-        description:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1126.jpg'
+        imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1127.jpg',         //图片资源
+        description:"ssssssssssssssssssssss"
     },{
         id:14,					//商品id
         productName:'冰霜长矛',    //商品名
         unitPrice:2, 
         stock: 10,             	//库存
-        imgUrl:'url',         //图片资源
-        description:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1127.jpg'
+        imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1128.jpg',         //图片资源
+        description:'scdcdccccccdcdccddddddddddddddddddddddddcdcd'
     }
 ]
 }

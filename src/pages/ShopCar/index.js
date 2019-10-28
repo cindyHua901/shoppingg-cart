@@ -13,15 +13,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { NavBar } from '../../components'
 import DetailItem from './DetailItem';
-import {checkedAll, isChecked,changeNumberAction,deleteProductAction,sumTotalPrice} from '../../store/ShopCarState'
+import {checkedAll, isChecked,changeNumberAction,deleteProductAction} from '../../store/ShopCarState'
 import { genderateOrders } from '../../store/OrderFormState'
 
 const styles = (theme)=>({
     shopCarContainer:{
         marginTop:100,
-        border:"1px solid green"
     },
     listRoot:{
         width: '100%',
@@ -33,27 +31,27 @@ const styles = (theme)=>({
         backgroundColor: theme.palette.background.paper,
     },
 })
+
 class ShopCar extends Component { 
-    componentWillMount() {
-        sumTotalPrice();
-    }
     handleGenerateOrder=()=>{
         const detalis = this.props.mapStateToProps.details.filter(detail =>{
             return detail.isChecked
         })
         const totalPrice = this.props.mapStateToProps.totalPrice;
         console.log(genderateOrders);
-        this.props.genderateOrders(detalis, totalPrice)
+        console.log(this.props);
+        this.props.genderateOrders(detalis, totalPrice);
+        this.props.history.push('/orderform');
     }
     render() {
-        const {classes,changeNumberAction, isChecked,deleteProductAction,checkedAll,genderateOrders} = this.props;
+        const {classes,changeNumberAction, isChecked,deleteProductAction,checkedAll} = this.props;
         const {details, isAllChecked, totalPrice,} = this.props.mapStateToProps;
         console.log(this.props);
         return (
             <Fragment>
                 shopCar
                 {/* 想要具有路由属性 使用withRouter */}
-                <NavBar />
+                
                 <CssBaseline />
                 <Container maxWidth="lg" className={classes.shopCarContainer}>
                 <List subheader={<ListSubheader>ShoppingCart</ListSubheader>} className={classes.root}>
@@ -74,9 +72,9 @@ class ShopCar extends Component {
                         <ListItemText id="SelectNumColumn" primary={`数量`} />
                         <ListItemText id="SingleTitleColumn" primary={`小计`} />
                         <ListItemSecondaryAction>
-                        <IconButton id="removeAllProduct" aria-label="removeAllProduct">
+                        {/* <IconButton id="removeAllProduct" aria-label="removeAllProduct">
                             <DeleteForeverIcon />
-                        </IconButton>
+                        </IconButton> */}
                         </ListItemSecondaryAction>
                     </ListItem>
                         {   
@@ -118,7 +116,6 @@ class ShopCar extends Component {
         deleteProductAction,
         checkedAll,
         isChecked,
-        sumTotalPrice,
         genderateOrders
     }
   )(withStyles(styles)(ShopCar))

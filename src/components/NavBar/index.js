@@ -4,7 +4,7 @@ class NavBar extends Component {
     toHome= () =>{
         console.log(this.props);
         // 编程式路由跳转
-        this.props.history.push('/home');
+        this.props.history.push('/orderform');
     }
     render() {
         console.log(this.props);
