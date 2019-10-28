@@ -5,6 +5,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
+import CardMedia from '@material-ui/core/CardMedia';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { withStyles } from '@material-ui/core/styles';
 import CostomInput from '../../components/CostomInput'
@@ -13,6 +14,11 @@ import CostomInput from '../../components/CostomInput'
 const styles = (theme)=>({
       text:{
         textAlign:'left'
+      },
+      media:{
+        height:78,
+        width: 78,
+        outline:"#999 solid 3px"
       }
 })
 
@@ -43,6 +49,13 @@ class DetailItem extends Component {
                     inputProps={{ 'aria-labelledby': labelId }}
                   />
                 </ListItemIcon>
+                <ListItemText primary={
+                    <CardMedia
+                      className={classes.media}
+                      image={product.imgUrl}
+                      title={product.productName}
+                    />}
+                />
                 <ListItemText id={labelId} primary={product.productName} className={classes.text}/>
                 <ListItemText id={labelId} primary={`￥ ${product.unitPrice}`} className={classes.text} />
                 <ListItemText id={labelId} className={classes.text}

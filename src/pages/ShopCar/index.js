@@ -67,6 +67,7 @@ class ShopCar extends Component {
                             onChange={()=>checkedAll()}
                         />
                         </ListItemIcon>
+                        <ListItemText id="IDColumn" primary="图片" />
                         <ListItemText id="IDColumn" primary="商品名称" />
                         <ListItemText id="UnitPriceColumn" primary={`单价`} />
                         <ListItemText id="SelectNumColumn" primary={`数量`} />

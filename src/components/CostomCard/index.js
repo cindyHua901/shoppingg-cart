@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
   media:{
     height: 130,
-    width: 120,
+    width: 140,
     outline:"#999 solid 3px"
   },
   textField:{
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     fontSize:'5px'
   },
   muicardaction: {
-    height:50
+    height:20
   }
 });
 
