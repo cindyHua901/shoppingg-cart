@@ -38,6 +38,16 @@ const styles =(theme)=> ({
   
 
  class OrderForm extends Component {
+    sumTotalprice = (details) => {
+        let totalPrice = 0;
+        for(var i=0; i< details.length; i++){
+            if(details[i].isChecked){
+                totalPrice += details[i].selectNum * details[i].product.unitPrice;
+            }
+        }
+        console.log(totalPrice)
+        return totalPrice;
+    }
     render() {
         console.log("props in orderForm",this.props);
         const {classes} = this.props;
@@ -60,7 +70,7 @@ const styles =(theme)=> ({
                                forms.map( form =>{
                                    return(
                                     <Paper className={classes.root}>
-                                        <Typography  color="inherit" variant="subitle1">
+                                        <Typography  color="inherit" variant="subtitle1">
                                             {`订单编号：${form.formID}`}
                                         </Typography>
                                         <Table className={classes.table} aria-label="simple table">
@@ -89,7 +99,7 @@ const styles =(theme)=> ({
                                             <TableFooter className={classes.tableFooter}>
                                                 <TableRow key={"order-footer"} >
                                                     <TableCell component="th" scope="row" variant="footer" colSpan="3">
-                                                        {`总计：${ form.totalPrice }`} 
+                                                        {`总计：${ this.sumTotalprice(form.details) }`} 
                                                     </TableCell>
                                                     <TableCell align="right" variant="footer">
                                                         <Button>提交订单</Button>

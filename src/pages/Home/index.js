@@ -31,6 +31,18 @@ const styles =(theme)=> ({
 });
 
 class Home extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            msg:""
+        }
+    }
+
+    handleAlterMessage = (productName, selectNum) =>{
+        this.setState({
+            msg: `${productName} X ${selectNum} 已加入购物车`
+        })
+    }
     render() {
         const { classes, addProductAction, showMessage, closeMessage} = this.props;
         const productList = this.props.mapStateToProps;
@@ -48,6 +60,7 @@ class Home extends Component {
                                         handleCloseMsg={closeMessage}
                                         hendleOpenMsg={showMessage}
                                         msgOpen={msg.msgOpen}
+                                        handleMsg = {this.handleAlterMessage}
                                         />)
                         })
                         }
@@ -64,7 +77,7 @@ class Home extends Component {
                     <CustomizedSnackbars
                         onClose={closeMessage}
                         variant="success"
-                        message={`${msg.productName} x ${msg.selectNum} 已放入购物车`}
+                        message={this.state.msg}
                     />
                 </Snackbar>
             </Fragment>

@@ -36,7 +36,8 @@ const styles = (theme)=>({
     }
 })
 
-class ShopCar extends Component { 
+class ShopCar extends Component {
+
     handleGenerateOrder=()=>{
         // 生成订单 将勾选的detail放到订单 并从购物车中删除
         const detalis = this.props.mapStateToProps.details.filter(detail =>{
@@ -52,15 +53,45 @@ class ShopCar extends Component {
         this.props.genderateOrders(detalis, totalPrice);
         this.props.history.push('/orderform');
     }
+
+    handleCountSelectNumber = (details) =>{
+        // 计算勾选了的单品数量
+        var countProductsNumber = 0;
+        for(var detail  of  details){
+            if(detail.isChecked){
+                countProductsNumber ++;
+            }    
+        }
+        return countProductsNumber;
+    }
+
+    sumTotalprice = (details) => {
+        let totalPrice = 0;
+        for(var i=0; i< details.length; i++){
+            if(details[i].isChecked){
+                totalPrice += details[i].selectNum * details[i].product.unitPrice;
+            }
+        }
+        console.log(totalPrice)
+        return totalPrice;
+    }
+    handleChangeSingeCheckbox = (index) =>{
+        this.setState({
+            ...this.state,
+            itemsChecked: [].fill(false,0 )
+        })
+    }
+
+
     render() {
-        const {classes,changeNumberAction, isChecked,deleteProductAction,checkedAll} = this.props;
-        const {details, isAllChecked, totalPrice,} = this.props.mapStateToProps;
-        console.log(this.props);
+
+        const {classes,changeNumberAction,deleteProductAction,isChecked,checkedAll} = this.props;
+        const {details, isAllChecked} = this.props.mapStateToProps;
+
         return (
             <Fragment>
-                shopCar
+                {/* shopCar */}
                 {/* 想要具有路由属性 使用withRouter */}
-                
                 <CssBaseline />
                 <Container maxWidth="false" className={classes.shopCarContainer}>
                 <List subheader={<ListSubheader color="primary" className={classes.subTitle}>ShoppingCart</ListSubheader>} className={classes.root}>
@@ -88,22 +119,23 @@ class ShopCar extends Component {
                         </ListItemSecondaryAction>
                     </ListItem>
                         {   
-                            details.map(detail => {
+                            details.map((detail, index)=> {
                                 return (<DetailItem 
                                             key = {detail.product.id} 
+                                            index = {index}
                                             detail = {detail} 
                                             handleChecked={isChecked}
-                                            sumSinglePrice = {changeNumberAction}
+                                            handlechangeNumber = {changeNumberAction}
                                             deleteProduct = {deleteProductAction} 
-                                            />)
+                                        />)
                             }
                         )
                         }
                     <ListItem>
-                    <ListItemText id={"total"} primary={`总计：${totalPrice}`} />
+                    <ListItemText id={"total"} primary={`总计：${this.sumTotalprice(details)}`} />
                         <ListItemSecondaryAction>
-                        {
-                            details.length > 0?
+                        {   
+                            this.handleCountSelectNumber(details) > 0?
                             (<Button edge="end" aria-label="comments" onClick={this.handleGenerateOrder}>
                                 <ListItemText id="subOrderForm" primary="生成订单" />
                             </Button>)

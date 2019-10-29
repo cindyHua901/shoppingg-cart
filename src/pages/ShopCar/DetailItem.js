@@ -23,20 +23,26 @@ const styles = (theme)=>({
 })
 
 class DetailItem extends Component {
-
-  onChange= e => {
+  constructor(props){
+    super(props);
+    this.state = {
+      isChecked : false
+    }
+  }
+  onChange= e => {  
     this.props.handleChecked(this.props.detail.product.id);
+
   }
 
   handleSelectNum = (selectNum) => {
-    this.props.sumSinglePrice(this.props.detail.product.id,selectNum)
+    this.props.handlechangeNumber(this.props.detail.product.id,selectNum)
   }
   handledelete = () =>{
     this.props.deleteProduct(this.props.detail.product.id);
   }
   render() {
     const {detail,classes } = this.props;
-    const {product, selectNum, isChecked, singleTotal} = detail;
+    const {product, selectNum, isChecked} = detail;
     const labelId = `checkbox-list-label-${product}`;
     return (  
               <ListItem dense button>
@@ -65,7 +71,7 @@ class DetailItem extends Component {
                         selectNum={selectNum} 
                         handleSelectNum={this.handleSelectNum}
                     />} />
-                <ListItemText id={labelId} primary={`￥ ${singleTotal}`} className={classes.text} />
+                <ListItemText id={labelId} primary={`￥ ${product.unitPrice * selectNum}`} className={classes.text} />
                 
                 <ListItemSecondaryAction>
                   <IconButton  

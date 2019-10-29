@@ -9,10 +9,6 @@ export const reduceStore =(productId,saleNumer)=>({
 })
 
 
-export const reducerProductStore = (productId,saleNumer)=> dispatch =>{
-    dispatch(reduceStore(productId,saleNumer));
-}
-//初始的商品数据
 export default function ProductsReducer(state = productList, { type, ...payload }){
     switch (type){
         case REDUCE_STORE:

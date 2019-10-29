@@ -24,20 +24,15 @@ export const sumTotalProduct = (detail) =>({
     detail
 })
 
-export const genderateOrders = (details, totalPrice) =>({
+export const genderateOrders = (details) =>({
     type:GENDERATE_ORDERS,
     details,
-    totalPrice
 })
 
 export const payFor = (details) =>({
     type:PAYFOR,
     details
 })
-
-export const sumTotal = (detail)=>dispatch =>{
-    dispatch(sumTotalProduct(detail))
-}
 
 
 function getRendomFormID (){

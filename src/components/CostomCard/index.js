@@ -50,21 +50,19 @@ export default function CostomCard(props) {
   const [state, setState] = React.useState({
       selectNum: 1
   });
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.value });
-  };
+  
   const handleSelectNum = (selectNum) =>{
       setState({...state,selectNum});
-      console.log("selectNum",selectNum)
+      // console.log("selectNum",selectNum)
   }
   const handleAddToCart = () =>{
+      props.handleMsg(product.productName, state.selectNum);
+      props.hendleOpenMsg();
       props.handleAdd(product,state.selectNum);
-      props.hendleOpenMsg(product.productName, state.selectNum);
-      
   }
   return (
     // card raised="true"可以用在hover上 选择当前的卡片的时候
-    <Fragment className={classes.cardConteiner}>
+    <div className={classes.cardConteiner}>
       <Card className={classes.card}>
         <CardContent>
           <CardMedia
@@ -92,6 +90,6 @@ export default function CostomCard(props) {
           </IconButton>
         </CardActions>
       </Card>
-    </Fragment>
+    </div>
   );
 }
