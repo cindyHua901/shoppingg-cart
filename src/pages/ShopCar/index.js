@@ -9,10 +9,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DetailItem from './DetailItem';
 import {checkedAll, isChecked,changeNumberAction,deleteProductAction} from '../../store/ShopCarState'
 import { genderateOrders } from '../../store/OrderFormState'
@@ -20,6 +18,7 @@ import { genderateOrders } from '../../store/OrderFormState'
 const styles = (theme)=>({
     shopCarContainer:{
         marginTop:100,
+        width:"80vw"
     },
     listRoot:{
         width: '100%',
@@ -30,16 +29,26 @@ const styles = (theme)=>({
         width: '100%',
         backgroundColor: theme.palette.background.paper,
     },
+    subTitle: {
+        fontSize: 30,
+        lineHight: 60,
+        height:60
+    }
 })
 
 class ShopCar extends Component { 
     handleGenerateOrder=()=>{
+        // 生成订单 将勾选的detail放到订单 并从购物车中删除
         const detalis = this.props.mapStateToProps.details.filter(detail =>{
+            if(detail.isChecked){
+                this.props.deleteProductAction(detail.product.id);
+            }
             return detail.isChecked
         })
+        this.props.mapStateToProps.details.map( detail =>{
+            return detail
+        })
         const totalPrice = this.props.mapStateToProps.totalPrice;
-        console.log(genderateOrders);
-        console.log(this.props);
         this.props.genderateOrders(detalis, totalPrice);
         this.props.history.push('/orderform');
     }
@@ -53,8 +62,8 @@ class ShopCar extends Component {
                 {/* 想要具有路由属性 使用withRouter */}
                 
                 <CssBaseline />
-                <Container maxWidth="lg" className={classes.shopCarContainer}>
-                <List subheader={<ListSubheader>ShoppingCart</ListSubheader>} className={classes.root}>
+                <Container maxWidth="false" className={classes.shopCarContainer}>
+                <List subheader={<ListSubheader color="primary" className={classes.subTitle}>ShoppingCart</ListSubheader>} className={classes.root}>
                     <ListItem key="formHeader" role={undefined} dense button>
                         <ListItemIcon>
                         <Checkbox

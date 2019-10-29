@@ -1,5 +1,3 @@
-import { StepConnector } from "@material-ui/core";
-import { sumTotalProduct } from "./OrderFormState";
 
 const initialState = {
         details:[
@@ -7,27 +5,27 @@ const initialState = {
                 product:{
                     id:2,					//商品id
                     productName:'匕首',    //商品名
-                    unitPrice:66,
+                    unitPrice:10,
                     stock: 10,             	//库存
                     imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1112.jpg',         //图片资源
                     description:'ssssssssssssssssssss'
                 },
                 selectNum:3,
                 isChecked:true,
-                singleTotal:198
+                singleTotal:30
             },
             {
                 product:{
                     id:3,					//商品id
                     productName:'搏击全套',    //商品名
-                    unitPrice:66,
+                    unitPrice:6,
                     stock: 23,             	//库存
                     imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1113.jpg',         //图片资源
                     description:'ssssssssssssssssssss'
                 },
                 selectNum:1,
                 isChecked:true,
-                singleTotal:66
+                singleTotal:6
             },
             {
                 product:{
@@ -45,7 +43,7 @@ const initialState = {
             }
         ],
         isAllChecked: true,
-        totalPrice: 492,       //遍历购物车被选中的产品 reduce singleTotal 计算总和
+        totalPrice: 168,       //遍历购物车被选中的产品 reduce singleTotal 计算总和
 
 }
 // shopCar action creater
@@ -119,22 +117,22 @@ function productCheckedNumber(details){
 
 export default function ShopCarReducer(state = initialState, { type, ...payload }){
     const product = payload.product;
-    const selectNum = payload.selectNum;     //注意这里是否有问题
+    const selectNum = payload.selectNum;     
     const productId = payload.productId;
     let details = state.details;
-    let totalPrice = state.totalPrice;
     let isAllChecked = state.isAllChecked;
-    console.log(payload);
+
     switch (type) {
-        case ADD_PRODUCT:
+        case ADD_PRODUCT:                     //添加商品到购物车
             let isInCart = false;
             for(let i=0;i<details.length;i++){
-                if(details[i].product.id === productId){
+                if(details[i].product.id === product.id){
                     details[i].selectNum += selectNum;
                     isInCart = true;
                 }
 
             }
+            // alert( `在购物车里有同一商品？${isInCart} ${product.id}`);
             if(!isInCart){
                 details = [...state.details,{
                     product,
@@ -148,7 +146,7 @@ export default function ShopCarReducer(state = initialState, { type, ...payload 
                 details,
                 totalPrice: sumTotalprice(details)
             };
-        case CHANG_PRODUCT_NUMBER:            // note 每次购物车里 数量的时候都通知重新计算单品价格及 总价
+        case CHANG_PRODUCT_NUMBER:           //改变商品的数量
             details = details.map(detail => {
                 if(productId === detail.product.id){
                     detail.selectNum = selectNum * 1;
@@ -161,7 +159,7 @@ export default function ShopCarReducer(state = initialState, { type, ...payload 
                 details,
                 totalPrice:sumTotalprice(details)
             }
-        case DELETE_PRODUCT:         //从购物车里删除某个单品  ok
+        case DELETE_PRODUCT:         //从购物车里删除某个单品  
             details = details.filter((detail) =>{
                 return detail.product.id !== productId;
             })
@@ -170,7 +168,7 @@ export default function ShopCarReducer(state = initialState, { type, ...payload 
                 details,
                 totalPrice:sumTotalprice(details)
             };
-        case IS_CHECKED:
+        case IS_CHECKED:        //更改购物车里单品的checkbox状态
                 details = state.details.map(detail => {
                     if(productId === detail.product.id){
                         detail.isChecked = !detail.isChecked ;
@@ -191,8 +189,7 @@ export default function ShopCarReducer(state = initialState, { type, ...payload 
                     isAllChecked: productCheckedNumber(details),
                     totalPrice: sumTotalprice(details)
                 }
-        case IS_ALLCHECKED: 
-             let totalPrice = 0;
+        case IS_ALLCHECKED:  //更改购物车 全选checkbox 的状态
             isAllChecked = !isAllChecked;
             if(isAllChecked){
                 details = details.map(detail =>{

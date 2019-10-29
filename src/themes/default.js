@@ -1,6 +1,7 @@
 import tinycolor from "tinycolor2";  //用来颜色转换
 
-const primary = "#536DFE";
+// const primary = "#536DFE";
+const primary = "#666";
 const secondary = "#FF5C93";
 const warning = "#FFC260";
 const success = "#3CD4A0";
@@ -130,12 +131,22 @@ export default {
       },
       body: {
         fontSize: '0.95rem',
+      },
+      footer:{
+        fontSize:'0.95rem'
       }
     },
     MuiListItemText:{
       root:{
         flex:2,
       }
-    }
+    },
+    MuiCard: {
+      root:{
+        '&:hover, &:focus': {
+          backgroundColor: '#F3F5FF',
+        },
+      }
+    },
   }
 };

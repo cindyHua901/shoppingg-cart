@@ -1,5 +1,4 @@
 export { default as CostomCard } from './CostomCard'
-export { default as Header } from './Header'
-export { default as NavBar } from './NavBar'
 export { default as CostomInput } from './CostomInput'
-export { default as Message } from './Message'
+export { default as CustomizedSnackbars } from './CustomizedSnackbars'
+export { default as Header } from './Header'

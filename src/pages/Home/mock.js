@@ -1,3 +1,4 @@
+// 商品页面的初始数据
 export default {
     productList:[{
         id:1,					//商品id
@@ -9,7 +10,7 @@ export default {
     },{
         id:2,					//商品id
         productName:'匕首',    //商品名
-        unitPrice:66,
+        unitPrice:10,
         stock: 10,             	//库存
         imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1112.jpg',         //图片资源
         description:'ssssssssssssssssssss'
@@ -17,7 +18,7 @@ export default {
     {
         id:3,					//商品id
         productName:'搏击全套',    //商品名
-        unitPrice:66,
+        unitPrice:6,
         stock: 23,             	//库存
         imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1113.jpg',         //图片资源
         description:'ssssssssssssssssssss'

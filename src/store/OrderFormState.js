@@ -1,50 +1,16 @@
-import { ShopCar, Product } from "../pages";
+
 
 const initState = {
-    details:[
-        {
-            product:{
-                id:2,					//商品id
-                productName:'匕首',    //商品名
-                unitPrice:66,
-                stock: 10,             	//库存
-                imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1112.jpg',         //图片资源
-                description:'ssssssssssssssssssss'
-            },
-            selectNum:3,
-            isChecked:true,
-            singleTotal:198
-        },
-        {
-            product:{
-                id:3,					//商品id
-                productName:'搏击全套',    //商品名
-                unitPrice:66,
-                stock: 23,             	//库存
-                imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1113.jpg',         //图片资源
-                description:'ssssssssssssssssssss'
-            },
-            selectNum:1,
-            isChecked:true,
-            singleTotal:66
-        },
-        {
-            product:{
-                id:4,					//商品id
-                productName:'吸血之镰',    //商品名
-                unitPrice:66,
-                stock: 44,             	//库存
-                imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1114.jpg',         //图片资源
-                description:'ssssssssssssssssssss'
-            },
-            selectNum:2,
-            isChecked:true,
-            singleTotal:132
-
-        }
-    ],
-    totalPrice:0
+    forms:[]
 }
+
+// forms:[
+//     {
+//         formID:"",
+//         details:[],
+//         totalPrice:0
+//     }
+// ]
 // orderForm action creater
 
 export const SUM_TOTAL_PRODUCT = "Sum_total_product";
@@ -73,23 +39,31 @@ export const sumTotal = (detail)=>dispatch =>{
     dispatch(sumTotalProduct(detail))
 }
 
-// reducer 接收到通知 更改state tree里的数据
+
+function getRendomFormID (){
+    let formID ="";
+    let timestamp=new Date().getTime();
+    var characterBox =['A','B','C','D','E','F','G','H','I','G','H','W','X','Y',"Z"];
+    for(var i=0; i<4; i++){
+        formID += characterBox[Math.ceil(Math.random()*14)];
+    }
+    formID += timestamp;
+    return formID
+}
 export default function OrderFormReducer(state=initState, { type, ...payload }){
     let details = payload.details;
     let totalPrice = payload.totalPrice;
     switch (type) {
-        case GENDERATE_ORDERS:
-            return{
-                ...state,
+        case GENDERATE_ORDERS:               //生成订单
+            const newForm = {
+                formID:getRendomFormID(),
                 details,
                 totalPrice
-            };
-        case PAYFOR:
-            return{
-                ...state,
-                details:[],
-                totalPrice:0
             }
+            state.forms = [...state.forms,newForm]
+            return{
+                forms:state.forms
+            };
         default:
             return state
 
