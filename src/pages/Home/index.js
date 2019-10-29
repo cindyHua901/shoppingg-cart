@@ -12,7 +12,7 @@ import CustomizedSnackbars from '../../components/CustomizedSnackbars'
 const styles =(theme)=> ({
     root: {
       marginTop:100,
-      width:"90vw",
+      width:"95vw",
       display: "flex",
       flexWrap:"wrap",
       justifyContent: "flex-start",

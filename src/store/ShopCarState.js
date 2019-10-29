@@ -1,49 +1,8 @@
 
 const initialState = {
-        details:[
-            {
-                product:{
-                    id:2,					//商品id
-                    productName:'匕首',    //商品名
-                    unitPrice:10,
-                    stock: 10,             	//库存
-                    imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1112.jpg',         //图片资源
-                    description:'ssssssssssssssssssss'
-                },
-                selectNum:3,
-                isChecked:true,
-                singleTotal:30
-            },
-            {
-                product:{
-                    id:3,					//商品id
-                    productName:'搏击全套',    //商品名
-                    unitPrice:6,
-                    stock: 23,             	//库存
-                    imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1113.jpg',         //图片资源
-                    description:'ssssssssssssssssssss'
-                },
-                selectNum:1,
-                isChecked:true,
-                singleTotal:6
-            },
-            {
-                product:{
-                    id:4,					//商品id
-                    productName:'吸血之镰',    //商品名
-                    unitPrice:66,
-                    stock: 44,             	//库存
-                    imgUrl:'http://game.gtimg.cn/images/yxzj/img201606/itemimg/1114.jpg',         //图片资源
-                    description:'ssssssssssssssssssss'
-                },
-                selectNum:2,
-                isChecked:true,
-                singleTotal:132
-
-            }
-        ],
+        details:[],
         isAllChecked: true,
-        totalPrice: 168,       //遍历购物车被选中的产品 reduce singleTotal 计算总和
+        totalPrice: 0,       //遍历购物车被选中的产品 reduce singleTotal 计算总和
 
 }
 // shopCar action creater

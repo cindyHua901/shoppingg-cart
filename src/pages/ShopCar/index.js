@@ -102,9 +102,18 @@ class ShopCar extends Component {
                     <ListItem>
                     <ListItemText id={"total"} primary={`总计：${totalPrice}`} />
                         <ListItemSecondaryAction>
-                        <Button edge="end" aria-label="comments" onClick={this.handleGenerateOrder}>
-                            <ListItemText id="subOrderForm" primary="生成订单" />
-                        </Button>
+                        {
+                            details.length > 0?
+                            (<Button edge="end" aria-label="comments" onClick={this.handleGenerateOrder}>
+                                <ListItemText id="subOrderForm" primary="生成订单" />
+                            </Button>)
+                            :
+                            (
+                            <Button edge="end" aria-label="comments" >
+                                <ListItemText id="subOrderForm" primary="请先添加商品在购物车" />
+                            </Button>
+                            )
+                        }
                         </ListItemSecondaryAction>
                     </ListItem>
                 </List>
