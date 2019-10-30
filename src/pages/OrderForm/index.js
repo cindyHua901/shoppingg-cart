@@ -92,7 +92,7 @@ const styles =(theme)=> ({
                                                         </TableCell>
                                                         <TableCell align="right">{product.unitPrice}</TableCell>
                                                         <TableCell align="right">{detail.selectNum}</TableCell>
-                                                        <TableCell align="right">{detail.singleTotal}</TableCell>
+                                                        <TableCell align="right">{detail.selectNum * detail.product.unitPrice}</TableCell>
                                                     </TableRow>
                                             )})}
                                             </TableBody>
